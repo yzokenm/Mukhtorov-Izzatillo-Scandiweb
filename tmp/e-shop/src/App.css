@@ -55,15 +55,14 @@ body .effect {
 
 body nav a:nth-child(1):target ~ .effect {
   left: 16.66%;
-  /* the middle of the first <a> */
 }
+
 body nav a:nth-child(2):target~ .effect {
   left: 49.99%;
-  /* the middle of the second <a> */
 }
+
 body nav a:nth-child(3):target ~ .effect {
   left: 83.33%;
-  /* the middle of the third <a> */
 }
  body .ph-line-nav .effect {
   width: 50px;
@@ -74,18 +73,39 @@ body nav a:nth-child(3):target ~ .effect {
 
 /***************************/
 
+/* CARD STYLES */
 
 body section .card {
   margin-top: 100px;
-  box-shadow: 0px 4px 8px 5px rgba(0,0,0,0.2);
   transition: 0.3s;
-  width: 20%;
+  width: 25%;
 }
 
 body section  .card:hover {
-  box-shadow: 0 15px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.2);
 }
 
 body section .container {
   padding: 2px 16px;
+}
+
+/* ************************** */
+
+
+body section {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+
+.hide{
+  display: none;
+  position: relative;
+  right: 100px;
+  top: 170px;
+}
+
+.card:hover + .hide{
+  display: block;
 }

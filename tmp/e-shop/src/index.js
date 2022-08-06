@@ -3,10 +3,23 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
+import {onError} from '@apollo/client/link/error'
+
+// const errorLink = onError((({graphqlErrors, networkErrors})=> {
+//   if(graphqlErrors){
+//     graphqlErrors.map(({message, location, path})=> {
+//       alert(`Graphql errro ${message}`)
+//     })
+//   }
+// }))
+// const link = from ([
+//   errorLink,
+//   new HttpLink({uri:"http://localhost:4000/all"})
+// ])
 
 const client = new ApolloClient({
-  uri: "https://api.spacex.land/graphql/",
+  uri: "http://localhost:4000/tech",
   cache: new InMemoryCache()
 });
 
