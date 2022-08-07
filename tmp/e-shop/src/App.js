@@ -50,9 +50,7 @@ class App extends Component {
   }
   render() {
     return (
-      <>
-        <Home props={this.state.products} />
-      </>
+      <Home props={this.state.products} />
     );
   }
 }

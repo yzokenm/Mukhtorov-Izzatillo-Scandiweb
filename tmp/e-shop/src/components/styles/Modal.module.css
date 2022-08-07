@@ -1,0 +1,168 @@
+
+body header {
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.centered {
+  position: fixed;
+  top: 35%;
+  right: 0;
+  transform: translate(-50%, -50%);
+}
+  
+.modal {
+  width: 300px;
+  height: auto;
+  background: white;
+  color: white;
+  z-index: 10;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+}
+  
+.heading {
+  margin: 0;
+  padding: 10px;
+  color: #2c3e50;
+  font-weight: 500;
+  font-size: 18px;
+  text-align: left;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  font-size: 14px;
+  color: #2c3e50;
+  gap: 10px;
+}
+
+.row1{
+  display: flex;
+  padding: 10px;
+  font-size: 14px;
+  color: #2c3e50;
+  gap: 10px;
+}
+
+.row1Child p:nth-child(2){
+  font-weight: bold;
+}
+
+
+.row1Child p:nth-child(4){
+  display: flex;
+  gap: 5px;
+}
+
+.row2Child{
+  position: relative;
+  text-align: center;
+  font-weight: bold;
+}
+.colorPick{
+  display: flex;
+  gap: 5px;
+}
+.colorPick div{
+  border: 1px solid black;
+  width: 18px;
+  height: 18px;
+}
+
+
+.row2Child p{
+  position: absolute;
+  top: 120px;
+  left: 10px;
+}
+
+.row2Child button:first-child{
+  width: 25px;
+  height: 25px;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.row2Child button:last-child{
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  bottom: 0;
+  right: 1px;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.totalCheckout{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+
+}
+
+.totalCheckout p{
+  font-weight: bold;
+}
+
+.actionsContainer {
+  padding: 15px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.deleteBtn {
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 11px 28px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  border: none;
+  color: #fff;
+  background: #ff3e4e;
+  transition: all 0.25s ease;
+}
+
+.deleteBtn:hover {
+  box-shadow: 0 10px 20px -10px rgba(255, 62, 78, 0.6);
+  transform: translateY(-5px);
+  background: #ff3e4e;
+}
+
+.cancelBtn {
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 11px 28px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  border: none;
+  color: #2c3e50;
+  background: rgb(63, 211, 63);
+  transition: all 0.25s ease;
+}
+
+.cancelBtn:hover {
+  box-shadow: 0 10px 20px -10px rgb(129, 212, 129);
+  transform: translateY(-5px);
+  background: rgb(63, 211, 63);
+}
+
+body section div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+

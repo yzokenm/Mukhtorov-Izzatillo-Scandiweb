@@ -4,11 +4,13 @@ import cartIcon from "./assets/Empty Cart.svg";
 import Man from "./Man";
 import Kids from "./Kids";
 import cartImg from "./assets/Circle Icon.svg";
+import CartModal from "./CartModal";
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedTab: 0,
+      isModalOpen: false,
     };
     this.handleSelectedTab = this.handleSelectedTab.bind(this);
   }
@@ -30,10 +32,11 @@ class Home extends Component {
     console.log("pROPS", this.props.props);
   }
   render() {
+    const data = this.props.props
     return (
-      <>
+      <container>
         <main>
-          <nav className="ph-line-nav">
+          <nav>
             <a href="#A1" id="A1" data-tab="1" onClick={this.handleSelectedTab}>
               Woman
             </a>
@@ -43,11 +46,9 @@ class Home extends Component {
             <a href="#A3" id="A3" data-tab="3" onClick={this.handleSelectedTab}>
               Kids
             </a>
-            <div className="effect"></div>
+            <div></div>
           </nav>
-          <div>
-            <img src={logo} />
-          </div>
+          <img src={logo} alt="logo" />
           <div>
             <form>
               <select name="currency" id="currency">
@@ -59,15 +60,19 @@ class Home extends Component {
               </select>
             </form>
             <div>
-              <img src={cartIcon} />
+              <img
+                src={cartIcon}
+                alt="cartIcon"
+                onClick={() => this.setState({ isModalOpen: true })}
+              />
             </div>
           </div>
         </main>
         {this.state.selectedTab === 1 ? (
           <section>
-            {this.props.props.categories.map((product, index) => (
+            {data.categories.map((product, index) => (
               <>
-                <div className="card" key={index}>
+                <main key={index}>
                   <img
                     src={product.products[1].gallery[4]}
                     alt="Avatar"
@@ -77,14 +82,16 @@ class Home extends Component {
                       height: "350px",
                     }}
                   />
-                  <div className="container">
-                    <h4>
+                  <label>
+                    <p>
                       <b>{product.products[0].brand}</b>
-                    </h4>
-                    <p>${product.products[1].prices[0].amount}</p>
-                  </div>
-                </div>
-                <img src={cartImg} className="hide" />
+                    </p>
+                    <strong>
+                      <p>${product.products[1].prices[0].amount}</p>
+                    </strong>
+                  </label>
+                  <img src={cartImg} alt="cartImg" />
+                </main>
               </>
             ))}
           </section>
@@ -93,7 +100,8 @@ class Home extends Component {
         ) : this.state.selectedTab === 3 ? (
           <Kids />
         ) : null}
-      </>
+        {this.state.isModalOpen && <CartModal props={data} onClick={() => this.setState({isModalOpen: false})} />}
+      </container>
     );
   }
 }

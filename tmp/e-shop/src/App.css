@@ -47,24 +47,25 @@ body main nav a {
   color: black;
 }
 
-body .effect {
+body nav div {
   position: absolute;
   transition: 0.3s ease-in-out;
   transform: translateX(-30%);
 }
 
-body nav a:nth-child(1):target ~ .effect {
+body nav a:nth-child(1):target ~ div {
   left: 16.66%;
 }
 
-body nav a:nth-child(2):target~ .effect {
+body nav a:nth-child(2):target ~ div {
   left: 49.99%;
 }
 
-body nav a:nth-child(3):target ~ .effect {
+body nav a:nth-child(3):target ~ div {
   left: 83.33%;
 }
- body .ph-line-nav .effect {
+
+body nav div {
   width: 50px;
   height: 2px;
   bottom: 5px;
@@ -74,19 +75,22 @@ body nav a:nth-child(3):target ~ .effect {
 /***************************/
 
 /* CARD STYLES */
+body section {
+  display: flex;
+}
 
-body section .card {
+body section main {
   margin-top: 100px;
   transition: 0.3s;
   width: 25%;
 }
 
-body section  .card:hover {
+body section main:hover {
   box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.2);
 }
 
-body section .container {
-  padding: 2px 16px;
+body section main label {
+  padding: 0px 15px;
 }
 
 /* ************************** */
@@ -98,14 +102,30 @@ body section {
   gap: 20px;
 }
 
-
-.hide{
-  display: none;
+body section main{
   position: relative;
-  right: 100px;
-  top: 170px;
+  display: flex;
+  flex-direction: column;
 }
 
-.card:hover + .hide{
+body section main img:first-child{
+}
+body section main img:nth-last-child(1){
+  width: 70px;
+  display: none;
+  position: absolute;
+  right: 10px;
+  bottom: 65px;
+} 
+
+
+body section main:hover img:nth-last-child(1){
   display: block;
 }
+
+body section main label > p:first-child{
+  font-size: 20px;
+  color: rgb(97, 94, 94);
+
+}
+
