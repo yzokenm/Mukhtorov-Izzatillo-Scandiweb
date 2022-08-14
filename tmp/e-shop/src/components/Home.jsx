@@ -12,7 +12,10 @@ class Home extends Component {
     this.state = {
       selectedTab: 0,
       isModalOpen: false,
-      selectedCard: false,
+      currencyBase:"$",
+      dollarSymbol: false,
+      poundSymbol: false,
+      euroSymbol: false,
     };
 
     this.handleSelectedTab = this.handleSelectedTab.bind(this);
@@ -32,14 +35,16 @@ class Home extends Component {
       });
     }
   }
-
-  handleSelectedCard = (id) => {
-    this.setState({
-      selectedCard: true,
-    });
-  };
+  componentDidMount(){
+    this.state.currencyBase === '$' ? this.setState({ dollarSymbol: true})
+    : this.state.currencyBase === "€" ? this.setState({ euroSymbol: true})
+    : this.setState({poundSymbol:true})
+  }
   render() {
-    const data = this.props.data;
+    const allProduct = this.props.allProduct;
+    const techProduct = this.props.tech;
+    const clothProduct = this.props.clothes;
+    console.log(allProduct);
     return (
       <>
         <main className={styles.main_navbar}>
@@ -58,12 +63,12 @@ class Home extends Component {
           <img src={logo} alt="logo" />
           <div>
             <form className={styles.select_currency}>
-              <select name="currency" id="currency">
-                <option value="currency">$</option>
-                <option value="currency">¥</option>
-                <option value="currency">₽</option>
-                <option value="currency">A$</option>
-                <option value="currency">£</option>
+              <select id="currency" value={this.state.currencyBase} onChange={(e)=> this.setState({currencyBase:e.target.value})}>
+                <option>$</option>
+                <option>A$</option>
+                <option>£</option>
+                <option>¥</option>
+                <option>₽</option>
               </select>
             </form>
             <div>
@@ -77,12 +82,35 @@ class Home extends Component {
         </main>
         {this.state.selectedTab === 1 ? (
           <section className={styles.card_section}>
-            {data.products.map((product) => (
+            {allProduct.products.map((product) => (
+              <Link to={`/singleItem/${product.id}`} className={styles.link_item}>
+                <main
+                  className={styles.card_main}
+                  key={product.id}
+                >
+                  <img
+                    className={styles.product_img}
+                    src={product.gallery[0]}
+                    alt=""
+                  />
+                  <label>
+                    <p>{product.name}</p>
+                    {product.prices.filter(item=> item.currency.symbol === this.state.currencyBase).map((price, index) => ( 
+                      <p key={index}>{this.state.currencyBase}{price.amount}</p> 
+                    ))}
+                  </label>
+                  <img src={cartImg} alt="cartImg" />
+                </main>
+              </Link>
+            ))}
+          </section>
+        ) : this.state.selectedTab === 2 ? (
+          <section className={styles.card_section}>
+            {techProduct.products.map((product) => (
               <Link to={`/singleItem/${product.id}`}>
                 <main
                   className={styles.card_main}
                   key={product.id}
-                  onClick={() => this.handleSelectedCard(product.id)}
                 >
                   <img
                     src={product.gallery[0]}
@@ -100,14 +128,34 @@ class Home extends Component {
               </Link>
             ))}
           </section>
-        ) : this.state.selectedTab === 2 ? (
-          <h1>this is for man</h1>
         ) : this.state.selectedTab === 3 ? (
-          <h1>this is for kids</h1>
+          <section className={styles.card_section}>
+            {clothProduct.products.map((product) => (
+              <Link to={`/singleItem/${product.id}`}>
+                <main
+                  className={styles.card_main}
+                  key={product.id}
+                >
+                  <img
+                    src={product.gallery[0]}
+                    alt=""
+                    className={styles.product_img}
+                  />
+                  <label>
+                    <p>{product.name}</p>
+                    {product.prices.slice(0, 1).map((price, index) => (
+                      <p key={index}>${price.amount}</p>
+                    ))}
+                  </label>
+                  <img src={cartImg} alt="cartImg" />
+                </main>
+              </Link>
+            ))}
+          </section>
         ) : null}
         {this.state.isModalOpen && (
           <CartModal
-            props={data}
+            props={allProduct}
             onClick={() => this.setState({ isModalOpen: false })}
           />
         )}
