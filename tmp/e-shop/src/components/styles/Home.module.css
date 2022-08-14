@@ -1,0 +1,124 @@
+body{
+    padding: 40px;
+}
+
+.main_navbar{
+    display: flex;
+    justify-content: space-between;
+}
+  
+.main_navbar div:nth-child(3){
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+}
+  
+.select_currency select{
+    font-size: 20px;
+    border: 0px;
+    outline: 0px;
+}
+  
+  
+  /* MENU TAB UNDERLINE ANIMATION */
+  
+  
+.sub_navbar{
+    padding: 10px;
+    display: flex;
+    font-size: 20px;
+    gap: 10px;
+
+    background: #FFF;
+    position: relative;
+    height:50px;
+    display: flex;
+}
+  
+.sub_navbar a {
+    background: #FFF;
+    display: block;
+    text-decoration: none;
+    transition: .4s;
+    color: black;
+}
+  
+.sub_navbar div {
+    position: absolute;
+    transition: 0.3s ease-in-out;
+    transform: translateX(-30%);
+}
+  
+.sub_navbar a:nth-child(1):target ~ div {
+    left: 16.66%;
+}
+  
+.sub_navbar a:nth-child(2):target ~ div {
+    left: 49.99%;
+}
+  
+.sub_navbar a:nth-child(3):target ~ div {
+    left: 83.33%;
+}
+  
+.sub_navbar div {
+    width: 50px;
+    height: 2px;
+    bottom: 5px;
+    background: #56E381;
+}
+  
+  /***************************/
+  
+  /* CARD STYLES */
+.card_section{
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 50px;
+}
+
+.card_main{
+    flex: 0 1 27%;
+    padding: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s;
+}
+  
+.card_main:hover {
+    box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.2);
+}
+  
+.card_main label {
+    padding: 0px 15px;
+}
+  
+.product_img{
+    width: 100%;
+    height: 20vw;
+    object-fit: cover;
+}
+  
+.card_main img:nth-last-child(1){
+    width: 70px;
+    position: absolute;
+    display: none;
+    right: 10px;
+    bottom: 65px;
+} 
+  
+.card_main:hover img:nth-last-child(1){
+    display: block;
+}
+  
+.card_main label > p:first-child{
+    font-size: 20px;
+    color: rgb(97, 94, 94);
+    
+}
+  
+  /* ************************** */
+  

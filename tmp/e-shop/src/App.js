@@ -1,56 +1,76 @@
 import "./App.css";
 import Home from "./components/Home";
 import React, { Component } from "react";
-import { request, gql } from "graphql-request";
+import {
+  ApolloClient,
+  InMemoryCache,
+  gql,
+} from "@apollo/client";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SingleItem from "./components/SingleItem";
 
-const query = gql`
-  query Query {
-    categories {
-      name
-      products {
-        id
-        name
-        inStock
-        gallery
-        description
-        category
-        attributes {
-          id
-          name
-          type
-          items {
-            displayValue
-            value
-            id
-          }
-        }
-        prices {
-          currency {
-            label
-            symbol
-          }
-          amount
-        }
-        brand
-      }
-    }
-  }
-`;
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       products: [],
     };
-    request('http://localhost:4000/all', query).then((data) => {
-      this.setState({
-        products:data
+
+    const client = new ApolloClient({
+      uri: "http://localhost:4000/graphql",
+      cache: new InMemoryCache(),
+    });
+    
+    client
+      .query({
+        query: gql`
+          query Query {
+            category(input:{title: "clothes"}) {
+                products {
+                  id
+                  name
+                  inStock
+                  gallery
+                  description
+                  category
+                  attributes {
+                    id
+                    name
+                    type
+                    items {
+                      displayValue
+                      value
+                      id
+                    }
+                  }
+                  prices {
+                    currency {
+                      label
+                      symbol
+                    }
+                    amount
+                  }
+                  brand
+                }
+            }
+          }
+        `,
       })
-    })
+      .then((result) => {
+        this.setState({
+          products: result.data.category
+        })
+      });
   }
   render() {
     return (
-      <Home props={this.state.products} />
+      <Router>
+        <Routes>
+          <Route path="/singleItem/:id" element={<SingleItem />} />
+          <Route path="/" element={<Home data={this.state.products} />} />
+        </Routes>
+      </Router>
     );
   }
 }

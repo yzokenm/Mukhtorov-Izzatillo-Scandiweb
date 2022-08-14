@@ -3,7 +3,6 @@ import styles from "./styles/Modal.module.css";
 
 class CartModal extends Component {
   render() {
-    console.log("this props", this.props);
     return (
       <>
         <header onClick={this.props.onClick} />
@@ -45,16 +44,16 @@ class CartModal extends Component {
                 />
               </div>
               <div className={styles.totalCheckout}>
-                <p>Total</p>
+                <p>Total:</p>
                 <p>$200.00</p>
               </div>
             </div>
             <div className={styles.actionsContainer}>
               <button className={styles.deleteBtn} onClick={this.props.onClick}>
-                View Bag
+                VIEW BAG
               </button>
               <button className={styles.cancelBtn} onClick={this.props.onClick}>
-                Check Out
+                CHECK OUT
               </button>
             </div>
           </div>

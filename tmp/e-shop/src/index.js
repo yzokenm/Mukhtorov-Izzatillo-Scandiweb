@@ -1,34 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
-import {onError} from '@apollo/client/link/error'
-
-// const errorLink = onError((({graphqlErrors, networkErrors})=> {
-//   if(graphqlErrors){
-//     graphqlErrors.map(({message, location, path})=> {
-//       alert(`Graphql errro ${message}`)
-//     })
-//   }
-// }))
-// const link = from ([
-//   errorLink,
-//   new HttpLink({uri:"http://localhost:4000/all"})
-// ])
-
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+// import {
+//   ApolloProvider,
+//   ApolloClient,
+//   InMemoryCache,
+// } from "@apollo/client";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
 const client = new ApolloClient({
   uri: "http://localhost:4000/tech",
-  cache: new InMemoryCache()
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-     <App />
-    </ApolloProvider>,
+      <App />
+    </ApolloProvider>
   </React.StrictMode>
 );
 

@@ -1,56 +1,63 @@
 import React, { Component } from "react";
 import logo from "./assets/a-logo.svg";
 import cartIcon from "./assets/Empty Cart.svg";
-import Man from "./Man";
-import Kids from "./Kids";
 import cartImg from "./assets/Circle Icon.svg";
 import CartModal from "./CartModal";
+import { Link } from "react-router-dom";
+import styles from "./styles/Home.module.css";
+import SingleItem from "./SingleItem";
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedTab: 0,
       isModalOpen: false,
+      selectedCard: false,
     };
+
     this.handleSelectedTab = this.handleSelectedTab.bind(this);
   }
   handleSelectedTab(event) {
-    console.log(event.target.tab);
-    if ((event.target.tab = 1)) {
+    if (event.target.getAttribute("href") === "#woman") {
       this.setState({
         selectedTab: 1,
       });
-    } else if ((event.target.tab = 2)) {
+    } else if (event.target.getAttribute("href") === "#man") {
       this.setState({
         selectedTab: 2,
       });
-    } else if ((event.target.tab = 3)) {
+    } else {
       this.setState({
         selectedTab: 3,
       });
     }
-    console.log("pROPS", this.props.props);
   }
+
+  handleSelectedCard = (id) => {
+    this.setState({
+      selectedCard: true,
+    });
+  };
   render() {
-    const data = this.props.props
+    const data = this.props.data;
     return (
-      <container>
-        <main>
-          <nav>
-            <a href="#A1" id="A1" data-tab="1" onClick={this.handleSelectedTab}>
+      <>
+        <main className={styles.main_navbar}>
+          <nav className={styles.sub_navbar}>
+            <a href="#woman" onClick={this.handleSelectedTab}>
               Woman
             </a>
-            <a href="#A2" id="A2" data-tab="2" onClick={this.handleSelectedTab}>
+            <a href="#man" onClick={this.handleSelectedTab}>
               Man
             </a>
-            <a href="#A3" id="A3" data-tab="3" onClick={this.handleSelectedTab}>
+            <a href="#kids" onClick={this.handleSelectedTab}>
               Kids
             </a>
             <div></div>
           </nav>
           <img src={logo} alt="logo" />
           <div>
-            <form>
+            <form className={styles.select_currency}>
               <select name="currency" id="currency">
                 <option value="currency">$</option>
                 <option value="currency">¥</option>
@@ -69,39 +76,42 @@ class Home extends Component {
           </div>
         </main>
         {this.state.selectedTab === 1 ? (
-          <section>
-            {data.categories.map((product, index) => (
-              <>
-                <main key={index}>
+          <section className={styles.card_section}>
+            {data.products.map((product) => (
+              <Link to={`/singleItem/${product.id}`}>
+                <main
+                  className={styles.card_main}
+                  key={product.id}
+                  onClick={() => this.handleSelectedCard(product.id)}
+                >
                   <img
-                    src={product.products[1].gallery[4]}
-                    alt="Avatar"
-                    style={{
-                      width: "100%",
-                      objectFit: "cover",
-                      height: "350px",
-                    }}
+                    src={product.gallery[0]}
+                    alt=""
+                    className={styles.product_img}
                   />
                   <label>
-                    <p>
-                      <b>{product.products[0].brand}</b>
-                    </p>
-                    <strong>
-                      <p>${product.products[1].prices[0].amount}</p>
-                    </strong>
+                    <p>{product.name}</p>
+                    {product.prices.slice(0, 1).map((price, index) => (
+                      <p key={index}>${price.amount}</p>
+                    ))}
                   </label>
                   <img src={cartImg} alt="cartImg" />
                 </main>
-              </>
+              </Link>
             ))}
           </section>
         ) : this.state.selectedTab === 2 ? (
-          <Man />
+          <h1>this is for man</h1>
         ) : this.state.selectedTab === 3 ? (
-          <Kids />
+          <h1>this is for kids</h1>
         ) : null}
-        {this.state.isModalOpen && <CartModal props={data} onClick={() => this.setState({isModalOpen: false})} />}
-      </container>
+        {this.state.isModalOpen && (
+          <CartModal
+            props={data}
+            onClick={() => this.setState({ isModalOpen: false })}
+          />
+        )}
+      </>
     );
   }
 }
