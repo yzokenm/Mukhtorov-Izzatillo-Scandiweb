@@ -30,20 +30,20 @@ export const getQuery = gql`
         amount
       }
       brand
-      id
     }
   }
 `;
 class DetailPage extends Component {
   displayProductDetails() {
-    const { product } = this.props.data;
-    console.log(product);
-    if (product) {
+    const product = this.props.data.product;
+    if (!product) {
+      return <h1>Try one more time pls :)</h1>;
+    } else {
       return (
         <main className={styles.main}>
           <section className={styles.section_one}>
-            {product.gallery.map((img) => (
-              <img src={img} alt="" />
+            {product.gallery.map((img, index) => (
+              <img src={img} alt="" key={index} />
             ))}
           </section>
           <section className={styles.section_two}>
@@ -80,8 +80,6 @@ class DetailPage extends Component {
           </section>
         </main>
       );
-    } else {
-      return <h1>No Product selected!</h1>;
     }
   }
   render() {

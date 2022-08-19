@@ -1,8 +1,8 @@
 
 body header {
   background-color: rgba(0, 0, 0, 0.2);
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: 0;
   top: 50%;
   left: 50%;
@@ -11,12 +11,13 @@ body header {
 }
 
 .centered {
-  position: fixed;
+  position: absolute;
   top: 35%;
   right: 0;
   transform: translate(-50%, -50%);
+ 
 }
-  
+
 .modal {
   width: 300px;
   height: auto;
@@ -53,10 +54,14 @@ body header {
   gap: 10px;
 }
 
+.row1 img{
+  object-fit: contain;
+  width: 40%;
+}
+
 .row1Child p:nth-child(2){
   font-weight: bold;
 }
-
 
 .row1Child p:nth-child(4){
   display: flex;
@@ -68,16 +73,17 @@ body header {
   text-align: center;
   font-weight: bold;
 }
+
 .colorPick{
   display: flex;
   gap: 5px;
 }
+
 .colorPick div{
   border: 1px solid black;
   width: 18px;
   height: 18px;
 }
-
 
 .row2Child p{
   position: absolute;
@@ -101,6 +107,8 @@ body header {
   background-color: white;
   border: 1px solid black;
 }
+
+
 
 .totalCheckout{
   display: flex;
@@ -158,11 +166,5 @@ body header {
   background: rgb(63, 211, 63);
 }
 
-body section div {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 10px;
-}
 
 

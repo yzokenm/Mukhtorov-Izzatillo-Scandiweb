@@ -1,5 +1,5 @@
 body{
-    padding: 40px;
+    padding: 50px;
 }
 
 .main_navbar{
@@ -8,7 +8,6 @@ body{
 }
   
 .main_navbar div:nth-child(3){
-    padding: 10px;
     display: flex;
     gap: 10px;
 }
@@ -20,59 +19,64 @@ body{
 }
   
   
-  /* MENU TAB UNDERLINE ANIMATION */
+/* MENU TAB UNDERLINE ANIMATION */
   
-  
-.sub_navbar{
-    padding: 10px;
+.wrapper{
     display: flex;
-    font-size: 20px;
-    gap: 10px;
-
-    background: #FFF;
-    position: relative;
-    height:50px;
-    display: flex;
+    justify-content: flex-start;
 }
-  
-.sub_navbar a {
+
+.wrapper a{
     font-family: 'Raleway';
     font-style: normal;
     font-size: 30px;
-    line-height: 120%;
     text-decoration: none;
     color: black;
+    margin: 0 10px;
+    text-transform: uppercase;
+    position: relative;
+}
 
-    display: flex;
-    align-items: center;
-    text-align: center;
-}
-  
-.sub_navbar div {
+.wrapper a:after{
+    content: '';
     position: absolute;
-    transition: 0.3s ease-in-out;
-    transform: translateX(-30%);
-}
-  
-.sub_navbar a:nth-child(1):target ~ div {
-    left: 16.66%;
-}
-  
-.sub_navbar a:nth-child(2):target ~ div {
-    left: 49.99%;
-}
-  
-.sub_navbar a:nth-child(3):target ~ div {
-    left: 83.33%;
-}
-  
-.sub_navbar div {
-    width: 50px;
+    width: 100%;
     height: 2px;
-    bottom: 5px;
-    background: #56E381;
+    background-color: #56E381;
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s linear;
+}
+
+.wrapper a:focus:after{
+    transform-origin: bottom left;
+    transform: scaleX(1);
+
 }
   
+.main_cart_section{
+    position: relative;
+}
+  
+.cart_icon{
+    width: 23px;
+}
+
+.cart_badge{
+    position: absolute;
+    right: 0;
+    left: 11px;
+    bottom: 33px;
+    text-align: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 20px;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+}
   /***************************/
   
   /* CARD STYLES */
@@ -98,7 +102,7 @@ body{
 }
 
 .card_main label p:first-child{
-    colosr:#7F7F81
+    color:#7F7F81
 
 }  
 .card_main label p:last-child {

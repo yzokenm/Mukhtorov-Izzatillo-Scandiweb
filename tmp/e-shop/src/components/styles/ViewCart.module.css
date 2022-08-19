@@ -1,0 +1,95 @@
+.main{
+    margin: 0;
+    padding: 15px;
+}
+
+.section{
+    display: flex;
+    justify-content: space-between;
+}
+
+.left p:first-child, .left p:nth-child(3), .left p:nth-child(4){
+    font-weight: bold;
+}
+
+
+.left p:nth-child(2){
+    color: #585858;
+}
+
+.left div:nth-child(5) button{
+    width: 50px;
+    height: 35px;
+    background-color: white;
+    border: 1px solid black;
+
+    margin-right: 10px;
+}
+
+.left div:nth-child(7) button{
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border: 1px solid black;
+    margin-right: 10px;
+}
+
+
+.right{
+    display: flex;
+}
+
+.itemCalc{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.itemCalc button{
+    width: 35px;
+    height: 35px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.right img{
+    object-fit: contain;
+    width: 300px;
+    height: 300px;
+}
+
+.overall{
+    display: flex;
+}
+.overall div:first-child{
+    text-align: left;
+}
+
+.overall div:last-child{
+    text-align: right;
+}
+
+.order_btn{
+    width: 200px;    
+    height: 40px;
+    background-color: #56E381;
+    border: none;
+    color: white;
+}
+
+.size_btns{
+    display: flex;
+    row-gap: 10px;
+
+}
+.size_btns button{
+    width: 30px;
+}
+
+.active{
+    border-color: red;
+}
+.focus:focus{
+    outline: none;
+}

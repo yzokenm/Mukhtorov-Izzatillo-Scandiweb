@@ -1,0 +1,82 @@
+import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
+import { Component } from "react";
+import { Link } from "react-router-dom";
+import cartImg from "./assets/Circle Icon.svg";
+import styles from "./styles/Home.module.css";
+class ClothesComp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      clothes: [],
+    };
+    const client = new ApolloClient({
+      uri: "http://localhost:4000/graphql",
+      cache: new InMemoryCache(),
+    });
+    client
+      .query({
+        query: gql`
+          query Query {
+            category(input: { title: "clothes" }) {
+              products {
+                id
+                name
+                inStock
+                gallery
+                description
+                category
+                attributes {
+                  id
+                  name
+                  type
+                  items {
+                    displayValue
+                    value
+                    id
+                  }
+                }
+                prices {
+                  currency {
+                    label
+                    symbol
+                  }
+                  amount
+                }
+                brand
+              }
+            }
+          }
+        `,
+      })
+      .then((result) => {
+        this.setState({
+          clothes: result.data.category,
+        });
+      });
+  }
+  render() {
+    return (
+        <section className={styles.card_section}>
+        {this.state.clothes.products?.map((product) => (
+          <Link to={`/singleItem/${product.id}`} className={styles.link_item}>
+            <main className={styles.card_main} key={product.id}>
+              <img
+                src={product.gallery[0]}
+                alt=""
+                className={styles.product_img}
+              />
+              <label>
+                <p>{product.name}</p>
+                {product.prices.slice(0, 1).map((price, index) => (
+                  <p key={index}>${price.amount}</p>
+                ))}
+              </label>
+              <img src={cartImg} alt="cartImg" />
+            </main>
+          </Link>
+        ))}
+      </section>
+    );
+  }
+}
+export default ClothesComp;
