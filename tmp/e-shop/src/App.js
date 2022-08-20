@@ -7,18 +7,47 @@ import ViewCart from "./components/ViewCart";
 import logo from "./components/assets/a-logo.svg";
 import cartIcon from "./components/assets/Empty Cart.svg";
 import styles from "./components/styles/Home.module.css";
+import CustomDropdown from "./components/CustomDropdown";
 
 class App extends Component {
   state = {
     cart:[],
     qty:0,
-    currencyBase: "$",
+    selectedOption: "$",
+    isOptionsOpen: false,
     selectedTab: 0,
     isModalOpen: false,
   }
 
+
+  toggleOptions = () => {
+    this.setState({
+      isOptionsOpen:true
+    })
+  };
+
+  setSelectedThenCloseDropdown = (option) => {
+    this.setState({
+      selectedOption: option,
+      isOptionsOpen: false
+    })
+  };
+
+  handleKeyDown = (option) => (e) => {
+    console.log("OPTION",option);
+    switch (e.key) {
+      case " ":
+      case "SpaceBar":
+      case "Enter":
+        e.preventDefault();
+        this.setSelectedThenCloseDropdown(option);
+        break;
+      default:
+        break;
+    }
+  };
+
   handleSelectedTab(event) {
-    console.log("value",event.target.value);
     if (event.target.getAttribute("href") === "#woman") {
       this.setState({
         selectedTab: 1,
@@ -69,6 +98,7 @@ class App extends Component {
 
 
   render() {
+    let symbol = this.state.selectedOption.slice(0, 1)
     return (
       <Router>
         <main className={styles.main_navbar}>
@@ -81,28 +111,25 @@ class App extends Component {
               <img src={logo} alt="logo" />
             </Link>
             <div>
-              <form className={styles.select_currency}>
-                <select id="currency" value={this.state.currencyBase} onChange={(e) => this.setState({ currencyBase: e.target.value })}>
-                  <option>$</option>
-                  <option>A$</option>
-                  <option>£</option>
-                  <option>¥</option>
-                  <option>₽</option>
-                </select>
-              </form>
+              <CustomDropdown 
+              selectedOption={this.state.selectedOption}
+              isOptionsOpen={this.state.isOptionsOpen}
+              toggleOptions={this.toggleOptions}
+              setSelectedThenCloseDropdown={this.setSelectedThenCloseDropdown}
+              handleKeyDown={this.handleKeyDown}
+              />
               <div className={styles.main_cart_section}>
-                <img
-                  src={cartIcon}
-                  alt="cartIcon"
-                  onClick={() => this.setState({ isModalOpen: true })}
-                  className={styles.cart_icon}
-                />
+                <img src={cartIcon} alt="cartIcon" onClick={() => this.setState({ isModalOpen: true })} className={styles.cart_icon}/>
                 <div className={styles.cart_badge}>{this.state.cart.length}</div>
               </div>
             </div>
           </main>
           <Routes>
-            <Route path="/singleItem/:id" element={<SingleItem />} />
+            <Route path="/singleItem/:id" element={<SingleItem 
+              symbol={symbol}
+              addToCart={this.addToCart}
+              />} 
+            />
             <Route path="/" element={<Home 
               onClick={() => this.setState({ isModalOpen: false })}
               selectedTab={this.state.selectedTab}
@@ -112,13 +139,17 @@ class App extends Component {
               cart={this.state.cart} 
               addToCartWithQty={this.addToCartWithQty} 
               removeFromCart={this.removeFromCart} 
-              qty={this.state.qty}/>} 
-              
+              qty={this.state.qty}
+              symbol={symbol}
+              />} 
             />
             <Route path="/ViewCart" element={<ViewCart cart={this.state.cart} 
               removeFromCart={this.removeFromCart} 
               addToCartWithQty={this.addToCartWithQty} 
-              qty={this.state.qty}/>} />
+              qty={this.state.qty}
+              symbol={symbol}
+              />}
+            />
           </Routes>
       </Router>
     );

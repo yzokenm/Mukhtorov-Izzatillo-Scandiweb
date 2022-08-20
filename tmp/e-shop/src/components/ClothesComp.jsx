@@ -56,24 +56,20 @@ class ClothesComp extends Component {
   }
   render() {
     return (
-        <section className={styles.card_section}>
+      <section className={styles.card_section}>
         {this.state.clothes.products?.map((product) => (
-          <Link to={`/singleItem/${product.id}`} className={styles.link_item}>
-            <main className={styles.card_main} key={product.id}>
-              <img
-                src={product.gallery[0]}
-                alt=""
-                className={styles.product_img}
-              />
+          <main className={styles.card_main} key={product.id}>
+            <Link to={`/singleItem/${product.id}`} className={styles.link_item}>
+              <img src={product.gallery[0]} alt="" className={styles.product_img}/>
               <label>
                 <p>{product.name}</p>
-                {product.prices.slice(0, 1).map((price, index) => (
-                  <p key={index}>${price.amount}</p>
+                {product.prices.filter((item) => item.currency.symbol === this.props.symbol).map((price, index) => (
+                  <p key={index}>{this.props.symbol} {price.amount}</p>
                 ))}
               </label>
-              <img src={cartImg} alt="cartImg" />
-            </main>
-          </Link>
+            </Link>
+            <img src={cartImg} alt="cartImg" onClick={() => this.props.addToCart(product)}/>
+          </main>
         ))}
       </section>
     );

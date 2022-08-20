@@ -18,9 +18,26 @@ body{
     outline: 0px;
 }
   
-  
+/* CURRENCY SELECT DROPDOWN */
+
+.currency_select{
+    border: none;
+    font-size: 20px;
+}
+
+.currency_select select:focus{
+    width: auto;  
+    
+}
+.currency_select select{
+    text-align: center;
+    font-size: 30px;
+
+}
+
+
+
 /* MENU TAB UNDERLINE ANIMATION */
-  
 .wrapper{
     display: flex;
     justify-content: flex-start;
@@ -139,7 +156,6 @@ body{
 }
   
   /* ************************** */
-  
-  .link_item{
+.link_item{
     text-decoration: none;
-  }
+}

@@ -10,7 +10,10 @@ class SingleItem extends Component {
   render() {
     let { id } = this.props.params;
     return (
-      <DetailPage id={id}/>
+      <DetailPage id={id} 
+        symbol={this.props.symbol}
+        addToCart={this.props.addToCart}
+      />
     );
   }
 }

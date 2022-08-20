@@ -54,11 +54,13 @@ class Home extends Component {
           }
         `,
       })
-      .then((result) => {
+      .then((result) =>
+      {
         this.setState({
           allProduct: result.data.category,
         });
-      });
+      }
+      );
   }
 
   render() {
@@ -72,16 +74,9 @@ class Home extends Component {
                   <img className={styles.product_img} src={product.gallery[0]} alt=""/>
                   <label>
                     <p>{product.name}</p>
-                    {product.prices
-                      .filter(
-                        (item) =>
-                          item.currency.symbol === this.props.currencyBase
-                      )
-                      .map((price, index) => (
-                        <p key={index}>
-                          {this.props.currencyBase} {price.amount}
-                        </p>
-                      ))}
+                    {product.prices.filter((item) => item.currency.symbol === this.props.symbol).map((price, index) => (
+                      <p key={index}>{this.props.symbol} {price.amount}</p>
+                    ))}
                   </label>
                 </Link>
                 <img src={cartImg} alt="cartImg" onClick={() => this.props.addToCart(product)}/>
@@ -89,9 +84,15 @@ class Home extends Component {
             ))}
           </section>
         ) : this.props.selectedTab === 2 ? (
-          <TechComp />
+          <TechComp 
+          symbol={this.props.symbol} 
+          addToCart={this.props.addToCart}
+          />
         ) : (
-          <ClothesComp />
+          <ClothesComp 
+          symbol={this.props.symbol} 
+          addToCart={this.props.addToCart}
+          />
         )}
         {this.props.isModalOpen && (
           <CartModal
@@ -100,6 +101,7 @@ class Home extends Component {
             addToCartWithQty={this.props.addToCartWithQty}
             removeFromCart={this.props.removeFromCart}
             qty={this.props.qty}
+            symbol={this.props.symbol}
           />
         )}
       </>

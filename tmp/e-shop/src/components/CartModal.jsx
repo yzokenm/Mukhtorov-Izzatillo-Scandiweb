@@ -20,9 +20,16 @@ class CartModal extends Component {
                       <strong>{item.brand}</strong>
                       <br /> {item.name}
                     </p>
-                    {item.prices.slice(0, 1).map((price) => (
-                      <p>$ {price.amount}</p>
-                    ))}
+                    {item.prices
+                      .filter(
+                        (price) =>
+                          price.currency.symbol === this.props.symbol
+                      )
+                      .map((price, index) => (
+                        <p key={index}>
+                          {this.props.symbol} {price.amount}
+                        </p>
+                      ))}
                     <p>Size:</p>
                     <p>
                       <button>XS</button>

@@ -1,6 +1,5 @@
 import { Component } from "react";
 import styles from "./styles/ViewCart.module.css";
-import pic from "./assets/images.png";
 
 class ViewCart extends Component {
   state = {
@@ -25,37 +24,23 @@ class ViewCart extends Component {
               <div className={styles.left}>
                 <p>{item.brand}</p>
                 <p>{item.name}</p>
-                {item.prices.slice(0, 1).map((price) => (
-                  <p>${price.amount}</p>
+                {item.prices.filter((price) => price.currency.symbol === this.props.symbol).map((price, index) => (<p key={index}>{this.props.symbol} {price.amount}</p>
                 ))}
                 <p>SIZE:</p>
                 <div className={styles.size_btns}>
                   {this.props.cart.map((product) =>
-                    product.attributes.map((attr) => 
-                      attr.id === "Size"
-                        && attr.items.map((item) => (
-                            <button
-                              type="button"
-                              value={item.value}
-                              onClick={(e)=> {this.handleSelectedAttribute(e)}}
-                              // style={{borderColor: this.state.selectedAttribute ? "red" :'blue'}}
-                            >{item.value}
-                            </button>
-                          ))
-                    )
+                    product.attributes.map((attr) => attr.id === "Size"&& attr.items.map((item) => (
+                      <button type="button" value={item.value} onClick={(e)=> {this.handleSelectedAttribute(e)}}>{item.value}</button>
+                    )))
                   )}
                 </div>
                 <p>COLOR:</p>
                 <div>
                 {this.props.cart.map((product) =>
-                    product.attributes.map((attr) => 
-                      attr.type === "swatch"
-                        && attr.items.map(item => (
-                            <button type="button" style={{ backgroundColor: `${item.value}`, borderColor: this.state.selectedAttribute ? 'red' : '' }} 
-                            onClick={()=> {this.handleSelectedAttribute(item.value)}}></button>
-                          ))
-                    )
-                  )}
+                  product.attributes.map((attr) => attr.type === "swatch" && attr.items.map(item => (
+                    <button type="button" style={{ backgroundColor: `${item.value}`, borderColor: this.state.selectedAttribute ? 'red' : '' }} onClick={()=> {this.handleSelectedAttribute(item.value)}}></button>
+                  )))
+                )}
                 </div>
               </div>
               <div className={styles.right}>
@@ -90,17 +75,3 @@ class ViewCart extends Component {
   }
 }
 export default ViewCart;
-
-
-// {this.props.cart.map((product) =>
-//   product.attributes.map((attr) =>
-//     attr.type === "swatch"
-//       ? attr.items.map((item) => (
-//           <button
-//             type="button"
-//             style={{ backgroundColor: `${item.value}` }}
-//           ></button>
-//         ))
-//       : null
-//   )
-// )}

@@ -42,9 +42,7 @@ class DetailPage extends Component {
       return (
         <main className={styles.main}>
           <section className={styles.section_one}>
-            {product.gallery.map((img, index) => (
-              <img src={img} alt="" key={index} />
-            ))}
+            {product.gallery.map((img, index) => (<img src={img} alt="" key={index} />))}
           </section>
           <section className={styles.section_two}>
             <img src={product.gallery[0]} alt="" />
@@ -55,9 +53,7 @@ class DetailPage extends Component {
             <p>SIZE:</p>
             {product.attributes.map((attr) => (
               <div className={styles.size_btns} key={attr.id}>
-                {attr.items.map((item) => (
-                  <button type="button">{item.value}</button>
-                ))}
+                {attr.items.map((item) => (<button type="button">{item.value}</button>))}
               </div>
             ))}
             <p>COLOR:</p>
@@ -67,10 +63,10 @@ class DetailPage extends Component {
               <button type="button">B</button>
             </div>
             <p>PRICE:</p>
-            {product.prices.slice(0, 1).map((price, index) => (
-              <p key={index}>${price.amount}</p>
+            {product.prices.filter((item) =>item.currency.symbol === this.props.symbol)
+              .map((price, index) => (<p key={index}>{this.props.symbol} {price.amount}</p>
             ))}
-            <button type="button" className={styles.add_card_btn}>
+            <button type="button" className={styles.add_card_btn} onClick={() => this.props.addToCart(product)}>
               ADD TO CARD
             </button>
             <div

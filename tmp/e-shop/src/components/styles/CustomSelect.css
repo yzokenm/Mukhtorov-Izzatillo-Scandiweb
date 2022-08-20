@@ -1,0 +1,62 @@
+div.wrapper {
+  position:absolute;
+  margin-left: -100px;
+  z-index: 1000;
+}
+
+div.container {
+  width: 100px;
+}
+
+.container button {
+  font-size: 20px;
+  width: 60%;
+  border: none;
+  position: relative;
+  text-align: left;
+  background-color: white;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+ul.options {
+  display: none;
+  list-style: none;
+  padding: 4px 0;
+  margin-top: -4px;
+  background-color: white;
+  text-align: center;
+  font-size: 20px;
+}
+
+ul.show {
+  display: block;
+}
+
+ul.options li {
+  padding: 6px 10px;
+}
+
+ul.options li:active,
+ul.options li:focus,
+ul.options li:hover,
+ul.options li[aria-selected="true"] {
+  background: #EEEEEE;
+  cursor: pointer;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  margin-left: 20px;
+  margin-bottom: 2px;
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
