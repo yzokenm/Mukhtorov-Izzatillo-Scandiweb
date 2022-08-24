@@ -2,6 +2,7 @@ import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import cartImg from "./assets/Circle Icon.svg";
+import ClothesComp from "./ClothesComp";
 import styles from "./styles/Home.module.css";
 class TechComp extends Component {
   constructor(props) {
@@ -68,7 +69,7 @@ class TechComp extends Component {
                 ))}
               </label>
             </Link>
-            <img src={cartImg} alt="cartImg" onClick={() => this.props.addToCart(product)} />
+            <img src={cartImg} alt="cartImg" onClick={() => this.props.addToCartWithQty(product)} />
           </main>
         ))}
       </section>

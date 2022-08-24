@@ -1,6 +1,6 @@
 .main{
     margin: 0;
-    padding: 15px;
+    padding: 50px;
 }
 
 .section{
@@ -92,4 +92,8 @@
 }
 .focus:focus{
     outline: none;
+}
+
+.selected{
+    border: 1px solid red;
 }

@@ -1,10 +1,9 @@
-body{
-    padding: 50px;
-}
-
 .main_navbar{
+    padding: 50px;
+    z-index: 11;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
   
 .main_navbar div:nth-child(3){
@@ -46,12 +45,12 @@ body{
 .wrapper a{
     font-family: 'Raleway';
     font-style: normal;
-    font-size: 30px;
+    font-size: 20px;
     text-decoration: none;
     color: black;
-    margin: 0 10px;
     text-transform: uppercase;
     position: relative;
+    padding: 10px;
 }
 
 .wrapper a:after{
@@ -78,28 +77,29 @@ body{
 }
   
 .cart_icon{
-    width: 23px;
+    width: 1.5rem;
 }
 
 .cart_badge{
     position: absolute;
     right: 0;
-    left: 11px;
-    bottom: 33px;
+    bottom: 0;
     text-align: center;
-    width: 22px;
-    height: 22px;
+    width: 1.5rem;
+    height: 1.5rem;
     border-radius: 20px;
     background-color: black;
     color: white;
     font-size: 16px;
+    transform: translate(45%, -60%);
 }
   /***************************/
   
   /* CARD STYLES */
 
 .card_section{
-    padding: 20px;
+    padding: 50px;
+    padding-top: 140px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -109,8 +109,6 @@ body{
 .card_main{
     padding: 10px;
     position: relative;
-    display: flex;
-    flex-direction: column;
     transition: 0.3s;
 }
   
@@ -121,7 +119,8 @@ body{
 .card_main label p:first-child{
     color:#7F7F81
 
-}  
+}
+
 .card_main label p:last-child {
     color: #1D1F22;
     font-family: 'Raleway';
@@ -138,11 +137,12 @@ body{
 }
   
 .card_main img:nth-last-child(1){
-    width: 70px;
+    width: 5rem;
     position: absolute;
     display: none;
-    right: 10px;
-    bottom: 65px;
+    right: 0;
+    bottom: 0;
+    transform: translate(-10%, -110%);
 } 
   
 .card_main:hover img:nth-last-child(1){
@@ -156,6 +156,7 @@ body{
 }
   
   /* ************************** */
+  
 .link_item{
     text-decoration: none;
 }

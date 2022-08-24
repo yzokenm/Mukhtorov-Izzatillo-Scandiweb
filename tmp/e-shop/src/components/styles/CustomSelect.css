@@ -1,7 +1,6 @@
 div.wrapper {
   position:absolute;
   margin-left: -100px;
-  z-index: 1000;
 }
 
 div.container {

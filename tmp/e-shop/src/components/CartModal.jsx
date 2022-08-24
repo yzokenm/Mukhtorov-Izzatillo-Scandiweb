@@ -6,7 +6,7 @@ class CartModal extends Component {
   render() {
     return (
       <>
-        <header onClick={this.props.onClick} />
+        <div onClick={this.props.onClick}  className={modalStyles.darkBg}/>
         <div className={modalStyles.centered}>
           <div className={modalStyles.modal}>
             <p className={modalStyles.heading}>
@@ -51,7 +51,7 @@ class CartModal extends Component {
                     >
                       +
                     </button>
-                    <p>{this.props.qty}</p>
+                    <p>{item.qty}</p>
                     <button type="button" onClick={()=> {this.props.removeFromCart(index)}}>-</button>
                   </div>
                   <img
@@ -75,10 +75,10 @@ class CartModal extends Component {
             ))}
             <div className={modalStyles.actionsContainer}>
               <Link to={"/ViewCart"}>
-                <button className={modalStyles.deleteBtn}>VIEW BAG</button>
+                <button className={modalStyles.viewBtn}>VIEW BAG</button>
               </Link>
               <button
-                className={modalStyles.cancelBtn}
+                className={modalStyles.checkoutBtn}
                 onClick={this.props.onClick}
               >
                 CHECK OUT

@@ -3,51 +3,60 @@ import styles from "./styles/ViewCart.module.css";
 
 class ViewCart extends Component {
   state = {
-    selectedAttribute:''
+    selectedValue: false
   }
-  componentDidMount(){
-    this.handleSelectedAttribute=(e)=> {
-        this.setState({
-          selectedAttribute: e.target.value
-        })
-    }
 
+  handleSelectedAttribute=(e)=> {
+    console.log(e.target.value);
+    if(e.target.value){
+      this.setState({
+        selectedValue: true
+      })
+    }
   }
   render() {
+    console.log(this.state.selectedValue);
     return (
       <div className={styles.main}>
         <h1>CART</h1>
         <hr />
-        {this.props.cart.map((item) => (
+        {this.props.cart.map((item, index) => (
           <>
             <div className={styles.section}>
               <div className={styles.left}>
                 <p>{item.brand}</p>
                 <p>{item.name}</p>
-                {item.prices.filter((price) => price.currency.symbol === this.props.symbol).map((price, index) => (<p key={index}>{this.props.symbol} {price.amount}</p>
-                ))}
+                {
+                  item.prices
+                  .filter((price) => price.currency.symbol === this.props.symbol)
+                  .map((price, index) => <p key={index}>{this.props.symbol} {price.amount}</p>)
+                }
                 <p>SIZE:</p>
                 <div className={styles.size_btns}>
-                  {this.props.cart.map((product) =>
-                    product.attributes.map((attr) => attr.id === "Size"&& attr.items.map((item) => (
-                      <button type="button" value={item.value} onClick={(e)=> {this.handleSelectedAttribute(e)}}>{item.value}</button>
-                    )))
-                  )}
+                {
+                  item.attributes.map((attr) => attr.type === "text" && attr.items.map((item) => 
+                    <button 
+                      type="button" 
+                      value={item.value} 
+                      className={this.state.selectedValue === true ? styles.selected : ''} 
+                      onClick={(e)=> {this.handleSelectedAttribute(e)}}>
+                      {item.value}
+                    </button>
+                  ))
+                }
                 </div>
                 <p>COLOR:</p>
                 <div>
-                {this.props.cart.map((product) =>
-                  product.attributes.map((attr) => attr.type === "swatch" && attr.items.map(item => (
-                    <button type="button" style={{ backgroundColor: `${item.value}`, borderColor: this.state.selectedAttribute ? 'red' : '' }} onClick={()=> {this.handleSelectedAttribute(item.value)}}></button>
-                  )))
-                )}
+                {item.attributes.map((attr) => attr.type === "swatch" && attr.items.map(item => (
+                  <button type="button" style={{ backgroundColor: `${item.value}`}}></button>
+                )))}
                 </div>
               </div>
               <div className={styles.right}>
                 <div className={styles.itemCalc}>
                   <button type="button" onClick={()=> {this.props.addToCartWithQty(item)}}>+</button>
-                  <p>{this.props.qty}</p>
-                  <button type="button" onClick={()=> {this.props.removeFromCart(item)}}>-</button>
+                  <p>{item.qty}</p>
+                  <button type="button" onClick={()=> {this.props.removeFromCart(index)}}>-</button>
                 </div>
                 <img src={item.gallery[0]} alt="" />
               </div>

@@ -4,10 +4,10 @@ import './styles/CustomSelect.css'
 class CustomDropdown extends Component {
     optionsList = [
       "$ USD",
-      "A$ AUD",
       "£ GBP",
       "¥ JPY",
-      "₽ RUB"
+      "₽ RUB",
+      "A$ AUD"
     ];
     render(){
       return (
@@ -18,22 +18,22 @@ class CustomDropdown extends Component {
               aria-haspopup="listbox"
               aria-expanded={this.props.isOptionsOpen}
               onClick={this.props.toggleOptions}
-              value={this.optionsList[this.props.selectedOption]}
-              onChange={(e)=> this.setState({selectedOption : e.target.value})}
+              value={this.optionsList[this.props.currencyBase]}
+              onChange={(e)=> this.setState({currencyBase : e.target.value})}
             >
-              {this.props.selectedOption.slice(0, 2)}<i className="arrow down"></i>
+              {this.props.currencyBase.slice(0, 2)}<i className="arrow down"></i>
             </button>
             <ul
               className={`options ${this.props.isOptionsOpen ? "show" : ""}`}
               role="listbox"
-              aria-activedescendant={this.optionsList[this.props.selectedOption]}
+              aria-activedescendant={this.optionsList[this.props.currencyBase]}
               tabIndex={-1}
             >
               {this.optionsList.map((option, index) => (
                 <li
                   id={option}
                   role="option"
-                  aria-selected={this.props.selectedOption == option}
+                  aria-selected={this.props.currencyBase == option}
                   tabIndex={0}
                   onKeyDown={this.props.handleKeyDown(option)}
                   onClick={() => {

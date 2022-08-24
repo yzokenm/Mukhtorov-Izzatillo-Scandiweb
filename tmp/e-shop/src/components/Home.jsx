@@ -4,14 +4,12 @@ import CartModal from "./CartModal";
 import { Link } from "react-router-dom";
 import styles from "./styles/Home.module.css";
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
-import ClothesComp from "./ClothesComp";
-import TechComp from "./TechComp";
-
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       allProduct: [],
+      title:''
     };
 
     const client = new ApolloClient({
@@ -54,7 +52,7 @@ class Home extends Component {
           }
         `,
       })
-      .then((result) =>
+      .then((result) => 
       {
         this.setState({
           allProduct: result.data.category,
@@ -66,7 +64,7 @@ class Home extends Component {
   render() {
     return (
       <>
-        {this.props.selectedTab === 1 ? (
+        <h1>{this.state.title}</h1>
           <section className={styles.card_section}>
             {this.state.allProduct.products?.map((product) => (
               <main className={styles.card_main} key={product.id}>
@@ -79,21 +77,10 @@ class Home extends Component {
                     ))}
                   </label>
                 </Link>
-                <img src={cartImg} alt="cartImg" onClick={() => this.props.addToCart(product)}/>
+                <img src={cartImg} alt="cartImg" onClick={() => this.props.addToCartWithQty(product)}/>
               </main>
             ))}
           </section>
-        ) : this.props.selectedTab === 2 ? (
-          <TechComp 
-          symbol={this.props.symbol} 
-          addToCart={this.props.addToCart}
-          />
-        ) : (
-          <ClothesComp 
-          symbol={this.props.symbol} 
-          addToCart={this.props.addToCart}
-          />
-        )}
         {this.props.isModalOpen && (
           <CartModal
             onClick={this.props.onClick}
@@ -102,6 +89,7 @@ class Home extends Component {
             removeFromCart={this.props.removeFromCart}
             qty={this.props.qty}
             symbol={this.props.symbol}
+            newArr={this.props.newArr}
           />
         )}
       </>

@@ -1,24 +1,69 @@
 import "./App.css";
 import Home from "./components/Home";
 import React, { Component } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import SingleItem from "./components/SingleItem";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ViewCart from "./components/ViewCart";
-import logo from "./components/assets/a-logo.svg";
-import cartIcon from "./components/assets/Empty Cart.svg";
-import styles from "./components/styles/Home.module.css";
-import CustomDropdown from "./components/CustomDropdown";
+import MyNavbar from "./components/MyNavbar";
+import ClothesComp from "./components/ClothesComp";
+import TechComp from "./components/TechComp";
+import DetailPage from "./components/DetailPage";
 
 class App extends Component {
-  state = {
-    cart:[],
-    qty:0,
-    selectedOption: "$",
-    isOptionsOpen: false,
-    selectedTab: 0,
-    isModalOpen: false,
+  constructor(props){
+    super(props);
+    this.state = {
+      cart: [],
+      currencyBase: "$",
+      isOptionsOpen: false,
+      isModalOpen: false
+    }
+
   }
 
+  // FUNCTION TAKES PRODUCT AND ADDS TO CART MODAL 
+
+  addToCartWithQty =(productToAdd)=> {
+    let isInCart = false;
+    let newCart = [...this.state.cart]
+   
+    for(let i = 0; i < newCart.length; i++){
+      if(newCart[i].id === productToAdd.id){
+        newCart[i].qty++
+        isInCart = true
+      }      
+    }
+
+    if(isInCart === false){
+      newCart.push({
+        id:productToAdd.id,
+        brand: productToAdd.brand,
+        name: productToAdd.name,
+        prices: productToAdd.prices,
+        gallery: productToAdd.gallery,
+        attributes: productToAdd.attributes,
+        qty: 1
+      })
+    }
+    this.setState({
+      cart:newCart
+    })
+  }
+
+  // FUNCTION REMOVES PRODUCT FROM CART
+  
+  removeFromCart = (productIndex) => {
+    let removefromCart = [...this.state.cart]
+    if(removefromCart[productIndex].qty > 1){
+      removefromCart[productIndex].qty--
+    }else{
+      removefromCart = removefromCart.filter((element, i) => i !== productIndex)
+    }
+    this.setState({
+      cart: removefromCart
+    })
+  }
+
+// Currency dropdown to change the currency of the store to one of the available currencies
 
   toggleOptions = () => {
     this.setState({
@@ -28,13 +73,12 @@ class App extends Component {
 
   setSelectedThenCloseDropdown = (option) => {
     this.setState({
-      selectedOption: option,
+      currencyBase: option,
       isOptionsOpen: false
     })
   };
 
   handleKeyDown = (option) => (e) => {
-    console.log("OPTION",option);
     switch (e.key) {
       case " ":
       case "SpaceBar":
@@ -47,106 +91,46 @@ class App extends Component {
     }
   };
 
-  handleSelectedTab(event) {
-    if (event.target.getAttribute("href") === "#woman") {
-      this.setState({
-        selectedTab: 1,
-      });
-    } else if (event.target.getAttribute("href") === "#man") {
-      this.setState({
-        selectedTab: 2,
-      });
-    } else {
-      this.setState({
-        selectedTab: 3,
-      });
-    }
-  }
-  
-  addToCart = (selectedProduct) => {
-    let newCart = [...this.state.cart];
-    newCart.push(selectedProduct)
-    this.setState({
-      cart:newCart
-    })
-  };
-
-  addToCartWithQty =(productToAdd)=> {
-    let newProduct = [...this.state.cart]
-    let indexOfElementInCart = this.state.cart.findIndex((element) => element.id === productToAdd.id)
-    if (indexOfElementInCart >= 0) {
-      this.setState({
-        qty : this.state.qty + 1
-      })
-    } 
-    newProduct.push(productToAdd)
-      this.setState({
-      cart:newProduct
-    })
-  }
-  
-  removeFromCart = (productIndex) => {
-    let newCart = [...this.state.cart]
-    let findIndex = newCart.findIndex(item=> item.id === productIndex)
-    newCart.splice(findIndex, 1)
-    this.setState({
-      cart:newCart,
-      qty: this.state.qty - 1
-    })
-  }
-
-
-
   render() {
-    let symbol = this.state.selectedOption.slice(0, 1)
+    let symbol = this.state.currencyBase.slice(0, 1)
     return (
       <Router>
-        <main className={styles.main_navbar}>
-            <div className={styles.wrapper}>
-              <a href="#woman" onClick={(e)=> {this.handleSelectedTab(e)}}>Woman</a>
-              <a href="#man" onClick={(e)=> {this.handleSelectedTab(e)}}>Man</a>
-              <a href="#kids" onClick={(e)=> {this.handleSelectedTab(e)}}>Kids</a>
-            </div>
-            <Link to="/">
-              <img src={logo} alt="logo" />
-            </Link>
-            <div>
-              <CustomDropdown 
-              selectedOption={this.state.selectedOption}
-              isOptionsOpen={this.state.isOptionsOpen}
-              toggleOptions={this.toggleOptions}
-              setSelectedThenCloseDropdown={this.setSelectedThenCloseDropdown}
-              handleKeyDown={this.handleKeyDown}
-              />
-              <div className={styles.main_cart_section}>
-                <img src={cartIcon} alt="cartIcon" onClick={() => this.setState({ isModalOpen: true })} className={styles.cart_icon}/>
-                <div className={styles.cart_badge}>{this.state.cart.length}</div>
-              </div>
-            </div>
-          </main>
+          <MyNavbar 
+            currencyBase={this.state.currencyBase}
+            isOptionsOpen={this.state.isOptionsOpen}
+            toggleOptions={this.toggleOptions}
+            setSelectedThenCloseDropdown={this.setSelectedThenCloseDropdown}
+            handleKeyDown={this.handleKeyDown}
+            cart={this.state.cart}
+            onClick={() => this.setState({ isModalOpen: true })}
+          />
           <Routes>
-            <Route path="/singleItem/:id" element={<SingleItem 
+            <Route path="/singleItem/:id" element={<DetailPage 
               symbol={symbol}
-              addToCart={this.addToCart}
+              addToCartWithQty={this.addToCartWithQty} 
               />} 
             />
             <Route path="/" element={<Home 
               onClick={() => this.setState({ isModalOpen: false })}
               selectedTab={this.state.selectedTab}
               isModalOpen={this.state.isModalOpen}
-              currencyBase={this.state.currencyBase}
-              addToCart={this.addToCart}  
               cart={this.state.cart} 
               addToCartWithQty={this.addToCartWithQty} 
               removeFromCart={this.removeFromCart} 
-              qty={this.state.qty}
               symbol={symbol}
-              />} 
+            />} 
             />
+            <Route path="/clothes" element={<ClothesComp
+              symbol={symbol}
+              addToCartWithQty={this.addToCartWithQty}
+            />}/>
+            <Route path="/tech" element={<TechComp
+              symbol={symbol}
+              addToCartWithQty={this.addToCartWithQty}
+            />}/>
             <Route path="/ViewCart" element={<ViewCart cart={this.state.cart} 
               removeFromCart={this.removeFromCart} 
               addToCartWithQty={this.addToCartWithQty} 
-              qty={this.state.qty}
               symbol={symbol}
               />}
             />

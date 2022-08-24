@@ -1,13 +1,12 @@
 
-body header {
+.darkBg {
+  position: fixed;
   background-color: rgba(0, 0, 0, 0.2);
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  top: 0;
+  left: 0;
 }
 
 .centered {
@@ -15,7 +14,7 @@ body header {
   top: 35%;
   right: 0;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 10;
 }
 
 .modal {
@@ -24,7 +23,6 @@ body header {
   background: white;
   color: white;
   z-index: 10;
-  border-radius: 16px;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
 }
   
@@ -128,40 +126,39 @@ body header {
   align-items: center;
 }
 
-.deleteBtn {
+.viewBtn {
   margin-top: 10px;
   cursor: pointer;
   font-weight: 500;
   padding: 11px 28px;
-  border-radius: 12px;
   font-size: 0.8rem;
   border: none;
-  color: #fff;
-  background: #ff3e4e;
+  color: black;
+  border: 1px solid black;
+  background: #fff;
   transition: all 0.25s ease;
 }
 
-.deleteBtn:hover {
-  box-shadow: 0 10px 20px -10px rgba(255, 62, 78, 0.6);
+.viewBtn:hover {
+  box-shadow: 0 10px 20px -10px #fff;
   transform: translateY(-5px);
-  background: #ff3e4e;
+  background: #fff;
 }
 
-.cancelBtn {
+.checkoutBtn {
   margin-top: 10px;
   cursor: pointer;
-  font-weight: 500;
   padding: 11px 28px;
-  border-radius: 12px;
   font-size: 0.8rem;
   border: none;
-  color: #2c3e50;
+  color: #fff;
+  border: 1px solid rgb(63, 211, 63);
   background: rgb(63, 211, 63);
   transition: all 0.25s ease;
 }
 
-.cancelBtn:hover {
-  box-shadow: 0 10px 20px -10px rgb(129, 212, 129);
+.checkoutBtn:hover {
+  box-shadow: 0 10px 20px -10px #fff;
   transform: translateY(-5px);
   background: rgb(63, 211, 63);
 }

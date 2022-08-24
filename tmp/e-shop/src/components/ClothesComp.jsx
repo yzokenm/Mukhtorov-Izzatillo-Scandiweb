@@ -68,7 +68,7 @@ class ClothesComp extends Component {
                 ))}
               </label>
             </Link>
-            <img src={cartImg} alt="cartImg" onClick={() => this.props.addToCart(product)}/>
+            <img src={cartImg} alt="cartImg" onClick={() => this.props.addToCartWithQty(product)}/>
           </main>
         ))}
       </section>
