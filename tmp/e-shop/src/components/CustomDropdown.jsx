@@ -29,13 +29,12 @@ class CustomDropdown extends Component {
               aria-activedescendant={this.optionsList[this.props.currencyBase]}
               tabIndex={-1}
             >
-              {this.optionsList.map((option, index) => (
+              {this.optionsList.map(option => (
                 <li
                   id={option}
                   role="option"
-                  aria-selected={this.props.currencyBase == option}
+                  aria-selected={this.props.currencyBase === option}
                   tabIndex={0}
-                  onKeyDown={this.props.handleKeyDown(option)}
                   onClick={() => {
                     this.props.setSelectedThenCloseDropdown(option);
                   }}

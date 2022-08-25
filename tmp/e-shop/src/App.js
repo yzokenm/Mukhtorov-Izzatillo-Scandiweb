@@ -15,9 +15,9 @@ class App extends Component {
       cart: [],
       currencyBase: "$",
       isOptionsOpen: false,
-      isModalOpen: false
+      isModalOpen: false,
+      black: true
     }
-
   }
 
   // FUNCTION TAKES PRODUCT AND ADDS TO CART MODAL 
@@ -41,7 +41,9 @@ class App extends Component {
         prices: productToAdd.prices,
         gallery: productToAdd.gallery,
         attributes: productToAdd.attributes,
-        qty: 1
+        qty: 1,
+        size: 0,
+        color: 0
       })
     }
     this.setState({
@@ -49,6 +51,43 @@ class App extends Component {
     })
   }
 
+  handleSelectedSizeOfProduct =(e, id)=> {
+    let newCart = [...this.state.cart]
+    if(e.target.value){
+      for(let i = 0; i < newCart.length; i++){
+        if(newCart[i].id === id){
+          this.setState({black: !this.state.black})
+          if(this.state.black){
+            newCart[i].size = e.target.value
+            e.target.style.backgroundColor = "black"
+            e.target.style.color = 'white' 
+          }else{
+            e.target.style.backgroundColor = "white"
+            e.target.style.color = 'black' 
+            newCart[i].size = null
+          }
+        }
+      }
+    }
+  }
+
+  handleSelectedColorOfProduct =(e, id)=> {
+    let newCart = [...this.state.cart]
+    for(let i = 0; i < newCart.length; i++){
+      if(newCart[i].id === id){
+        this.setState({black: !this.state.black})
+        if(this.state.black){
+          newCart[i].color = e.target.value
+          e.target.style.border = '1px solid #5DCF7B'
+        }else{
+          newCart[i].color = null
+          e.target.style.border = "none"
+        }
+
+      }
+
+      }
+  }
   // FUNCTION REMOVES PRODUCT FROM CART
   
   removeFromCart = (productIndex) => {
@@ -77,21 +116,22 @@ class App extends Component {
       isOptionsOpen: false
     })
   };
+  
+  //  FUNCTION TAKES OBJECT AS AN ARGUMENT WHICH CONTAINS VALUE AND 
+  //  DIGIT NUMBER. VALUE WILL BE SEPERATED AFTER THOUSANDS AND DIGITCOUNT IS NUMBER OF DECIMALS AFTER FRACTIONS 
 
-  handleKeyDown = (option) => (e) => {
-    switch (e.key) {
-      case " ":
-      case "SpaceBar":
-      case "Enter":
-        e.preventDefault();
-        this.setSelectedThenCloseDropdown(option);
-        break;
-      default:
-        break;
+  formatNumber=(params)=> {
+    if (!params.value) {
+      return (0).toFixed(params.digitCount ?? 2).toString();
     }
-  };
+    return params.value
+      .toFixed(params.digitCount ?? 2)
+      .toString()
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+  }
 
   render() {
+    
     let symbol = this.state.currencyBase.slice(0, 1)
     return (
       <Router>
@@ -100,7 +140,6 @@ class App extends Component {
             isOptionsOpen={this.state.isOptionsOpen}
             toggleOptions={this.toggleOptions}
             setSelectedThenCloseDropdown={this.setSelectedThenCloseDropdown}
-            handleKeyDown={this.handleKeyDown}
             cart={this.state.cart}
             onClick={() => this.setState({ isModalOpen: true })}
           />
@@ -118,6 +157,7 @@ class App extends Component {
               addToCartWithQty={this.addToCartWithQty} 
               removeFromCart={this.removeFromCart} 
               symbol={symbol}
+              formatNumber={this.formatNumber}
             />} 
             />
             <Route path="/clothes" element={<ClothesComp
@@ -132,6 +172,9 @@ class App extends Component {
               removeFromCart={this.removeFromCart} 
               addToCartWithQty={this.addToCartWithQty} 
               symbol={symbol}
+              handleSelectedSizeOfProduct={this.handleSelectedSizeOfProduct}
+              handleSelectedColorOfProduct={this.handleSelectedColorOfProduct}
+              formatNumber={this.formatNumber}
               />}
             />
           </Routes>

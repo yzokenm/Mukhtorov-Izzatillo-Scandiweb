@@ -17,9 +17,7 @@ class Home extends Component {
       cache: new InMemoryCache(),
     });
 
-    client
-      .query({
-        query: gql`
+    client.query({query: gql`
           query Query {
             category(input: { title: "all" }) {
               products {
@@ -52,15 +50,8 @@ class Home extends Component {
           }
         `,
       })
-      .then((result) => 
-      {
-        this.setState({
-          allProduct: result.data.category,
-        });
-      }
-      );
-  }
-
+      .then((result) => {this.setState({allProduct: result.data.category})})}
+      
   render() {
     return (
       <>
@@ -90,6 +81,7 @@ class Home extends Component {
             qty={this.props.qty}
             symbol={this.props.symbol}
             newArr={this.props.newArr}
+            formatNumber={this.props.formatNumber}
           />
         )}
       </>

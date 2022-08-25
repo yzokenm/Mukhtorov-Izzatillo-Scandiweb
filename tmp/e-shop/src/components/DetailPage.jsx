@@ -3,11 +3,11 @@ import styles from "./styles/SingleItem.module.css";
 import { gql } from "@apollo/client";
 import {Query} from 'react-apollo'
 import { useParams } from "react-router-dom";
- 
 
 export function withParams(Component) {
   return props => <Component {...props} params={useParams()} />;
 }
+
 class DetailPage extends Component {
   render() {
   const getQuery = gql`
@@ -49,9 +49,7 @@ class DetailPage extends Component {
           if(data) return (
             <main className={styles.main}>
             <section className={styles.section_one}>
-              {data.product.gallery.map((img, index) => (
-                <img src={img} alt="" key={index} />
-              ))}
+              {data.product.gallery.map((img, index) => (<img src={img} alt="" key={index} />))}
             </section>
             <section className={styles.section_two}>
               <img src={data.product.gallery[0]} alt="" />
@@ -60,24 +58,21 @@ class DetailPage extends Component {
               <p>{data.product.brand}</p>
               <p>{data.product.name}</p>
               <p>SIZE:</p>
-              {data.product.attributes.map((attr) => (
-                <div className={styles.size_btns} key={attr.id}>
-                  {attr.items.map((item) => (
-                    <button type="button">{item.value}</button>
-                  ))}
-                </div>
-              ))}
+              <div className={styles.size_btns}>
+              {data.product.attributes.map((attr) => attr.type === "text" && attr.items.map((i) => 
+                <button type="button" value={i.value}>{i.value}</button>))
+              }
+              </div>
               <p>COLOR:</p>
               <div className={styles.color_btns}>
-                <button type="button">R</button>
-                <button type="button">G</button>
-                <button type="button">B</button>
+              {data.product.attributes.map((attr) => attr.type === "swatch" && attr.items.map(i => (
+                <button type="button" value={i.value} style={{ backgroundColor: `${i.value}`, border:"none"}}></button>)))
+              }
               </div>
               <p>PRICE:</p>
               {data.product.prices.filter((item) => item.currency.symbol === this.props.symbol)
-                .map((price, index) => (
-                  <p key={index}>{this.props.symbol} {price.amount}</p>
-                ))}
+                .map((price, index) => (<p key={index}>{this.props.symbol} {price.amount}</p>))
+              }
               <button type="button" className={styles.add_card_btn} onClick={() => this.props.addToCartWithQty(data.product)}>
                 ADD TO CARD
               </button>

@@ -18,7 +18,7 @@
 }
 
 .modal {
-  width: 300px;
+  width: 350px;
   height: auto;
   background: white;
   color: white;
@@ -66,6 +66,36 @@
   gap: 5px;
 }
 
+.size_btns{
+  display: flex;
+  gap: 10px;
+
+}
+
+.size_btns button{
+  width: auto;
+  height: 25px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: white;
+  border: 1px solid black;
+}
+
+.color_btns{
+  display: flex;
+}
+
+.color_btns button{
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border: 1px solid black;
+  margin-right: 10px;
+}
+
 .row2Child{
   position: relative;
   text-align: center;
@@ -111,18 +141,18 @@
 .totalCheckout{
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-
+  padding: 20px;
 }
 
 .totalCheckout p{
   font-weight: bold;
+  color: black;
 }
 
 .actionsContainer {
-  padding: 15px;
+  padding: 20px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 

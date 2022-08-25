@@ -1,21 +1,19 @@
 import { Component } from "react";
 import styles from "./styles/ViewCart.module.css";
-
 class ViewCart extends Component {
-  state = {
-    selectedValue: false
-  }
-
-  handleSelectedAttribute=(e)=> {
-    console.log(e.target.value);
-    if(e.target.value){
-      this.setState({
-        selectedValue: true
-      })
-    }
-  }
   render() {
-    console.log(this.state.selectedValue);
+    let newCart = [...this.props.cart]
+    let totalQty = 0;
+    let totalSum = 0;
+    let arr = []
+    for(let i = 0; i < newCart.length; i++){
+      totalQty += newCart[i].qty
+    }
+    this.props.cart.map(item=> (item.prices.filter((price) => price.currency.symbol === this.props.symbol)
+      .map((price, index) => arr.push(price.amount))
+    ))
+    totalSum = arr.reduce((acc, val)=> (acc + val)*totalQty, 0)
+    let tax = this.props.formatNumber({ value: totalSum*(21/100), digitCount: 0 }) 
     return (
       <div className={styles.main}>
         <h1>CART</h1>
@@ -34,21 +32,25 @@ class ViewCart extends Component {
                 <p>SIZE:</p>
                 <div className={styles.size_btns}>
                 {
-                  item.attributes.map((attr) => attr.type === "text" && attr.items.map((item) => 
+                  item.attributes.map((attr) => attr.type === "text" && attr.items.map((i) => 
                     <button 
                       type="button" 
-                      value={item.value} 
-                      className={this.state.selectedValue === true ? styles.selected : ''} 
-                      onClick={(e)=> {this.handleSelectedAttribute(e)}}>
-                      {item.value}
+                      value={i.value} 
+                      onClick={(e)=> {this.props.handleSelectedSizeOfProduct(e, item.id)}}>
+                      {i.value}
                     </button>
                   ))
                 }
                 </div>
                 <p>COLOR:</p>
-                <div>
-                {item.attributes.map((attr) => attr.type === "swatch" && attr.items.map(item => (
-                  <button type="button" style={{ backgroundColor: `${item.value}`}}></button>
+                <div className={styles.color_btns}>
+                {item.attributes.map((attr) => attr.type === "swatch" && attr.items.map(i => (
+                  <button 
+                    type="button" 
+                    value={i.value}
+                    style={{ backgroundColor: `${i.value}`, border:"none"}}
+                    onClick={(e)=> {this.props.handleSelectedColorOfProduct(e, item.id)}}>
+                  </button>
                 )))}
                 </div>
               </div>
@@ -71,9 +73,9 @@ class ViewCart extends Component {
             <p>Total:</p>
           </div>
           <div>
-            <p>$40.00</p>
-            <p>4</p>
-            <p>$200.00</p>
+            <p> {this.props.symbol} {tax}</p>
+            <p>{totalQty}</p>
+            <p>{this.props.symbol} {this.props.formatNumber({value: totalSum, digitCount:2})}</p>
           </div>
         </div>
         <button type="button" className={styles.order_btn}>

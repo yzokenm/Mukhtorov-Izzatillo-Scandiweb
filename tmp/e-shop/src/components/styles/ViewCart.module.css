@@ -26,7 +26,7 @@
     margin-right: 10px;
 }
 
-.left div:nth-child(7) button{
+.color_btns button{
     width: 30px;
     height: 30px;
     background-color: white;
@@ -87,13 +87,4 @@
     width: 30px;
 }
 
-.active{
-    border-color: red;
-}
-.focus:focus{
-    outline: none;
-}
 
-.selected{
-    border: 1px solid red;
-}

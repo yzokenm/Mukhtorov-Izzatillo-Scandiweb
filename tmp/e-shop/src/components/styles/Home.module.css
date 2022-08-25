@@ -71,6 +71,10 @@
     transform: scaleX(1);
 
 }
+
+.wrapper a:focus{
+    color: #56E381;
+}
   
 .main_cart_section{
     position: relative;
@@ -132,8 +136,8 @@
   
 .product_img{
     width: 400px;
-    height:400px;
-    object-fit:fill;
+    height:350px;
+    object-fit:contain;
 }
   
 .card_main img:nth-last-child(1){
