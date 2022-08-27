@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import cartImg from "./assets/Circle Icon.svg";
-import CartModal from "./CartModal";
 import { Link } from "react-router-dom";
 import styles from "./styles/Home.module.css";
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
@@ -20,6 +19,7 @@ class Home extends Component {
     client.query({query: gql`
           query Query {
             category(input: { title: "all" }) {
+              name
               products {
                 id
                 name
@@ -50,15 +50,15 @@ class Home extends Component {
           }
         `,
       })
-      .then((result) => {this.setState({allProduct: result.data.category})})}
+      .then((result) => {this.setState({allProduct: result.data.category, title: result.data.category.name })})}
       
   render() {
     return (
       <>
-        <h1>{this.state.title}</h1>
-          <section className={styles.card_section}>
+        <h1 className={styles.title}>Category {this.state.title.charAt(0).toUpperCase() + this.state.title.slice(1)}</h1>
+          <div className={styles.card_section}>
             {this.state.allProduct.products?.map((product) => (
-              <main className={styles.card_main} key={product.id}>
+              <div className={styles.card_main} key={product.id}>
                 <Link to={`/singleItem/${product.id}`} className={styles.link_item}>
                   <img className={styles.product_img} src={product.gallery[0]} alt=""/>
                   <label>
@@ -69,21 +69,10 @@ class Home extends Component {
                   </label>
                 </Link>
                 <img src={cartImg} alt="cartImg" onClick={() => this.props.addToCartWithQty(product)}/>
-              </main>
+              </div>
             ))}
-          </section>
-        {this.props.isModalOpen && (
-          <CartModal
-            onClick={this.props.onClick}
-            cart={this.props.cart}
-            addToCartWithQty={this.props.addToCartWithQty}
-            removeFromCart={this.props.removeFromCart}
-            qty={this.props.qty}
-            symbol={this.props.symbol}
-            newArr={this.props.newArr}
-            formatNumber={this.props.formatNumber}
-          />
-        )}
+          </div>
+       
       </>
     );
   }

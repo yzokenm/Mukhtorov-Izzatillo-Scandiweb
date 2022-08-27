@@ -35,7 +35,7 @@ class CartModal extends Component {
                     <p>Size:</p>
                     <div className={modalStyles.size_btns}>
                       {item.attributes.map((attr) => attr.type === "text" && attr.items.map((i) => 
-                        <button type="button" value={i.value}>{i.value}</button>))
+                        <button type="button" value={i.value} onClick={(e)=> {this.props.handleSelectedSizeOfProduct(e, item.id)}}>{i.value}</button>))
                       }
                     </div>
                     <p>Color:</p>
