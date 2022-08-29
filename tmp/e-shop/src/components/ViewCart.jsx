@@ -1,10 +1,9 @@
 import { Component } from "react";
 import styles from "./styles/ViewCart.module.css";
 class ViewCart extends Component {
-    state = {
-      indexes: {}
-      
-    }
+  state = {
+    indexes: {}
+  }
 
   // FUNCTION TAKES SELECTED PRODUCT AS AN ARGUMENT AND SWITCHES BETWEEN ITS IMAGES TO THE RIGHT
   previousSlide =(item)=> {
@@ -20,25 +19,6 @@ class ViewCart extends Component {
     const newIndex = currentIndex === item.gallery.length - 1 ? 0 : currentIndex + 1;
     this.setState({indexes:{...this.state.indexes, [item.id]:newIndex}})
   }
-
-  handleSelectedSizeOfProduct = (val, id) => {
-    let newCart = [...this.props.cart]
-
-    let index = newCart.findIndex(e => e.id === id)
-
-    if (this.state.isAttributSelected) {
-        newCart[index].size = null
-        newCart[index].isSelected = 'inActive'
-    } else {
-        newCart[index].size = val.value
-        newCart[index].isSelected = 'active'
-    }
-
-    this.setState({
-        isAttributSelected: !this.state.isAttributSelected,
-        cart: newCart
-    })
-}
 
   render() {
     // CALCULATING ALL PRODUCT QTY, TAXES AND TOTAL SUM OF ALL PRODUCTS IN THE CART PAGE
