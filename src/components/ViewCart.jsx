@@ -28,6 +28,7 @@ class ViewCart extends Component {
     let newArr = [];
     let tax = 0;
    
+    // eslint-disable-next-line array-callback-return
     newCart.map(item => {
       totalQty += item.qty 
       item.prices.filter(price => price.currency.symbol === this.props.symbol)
