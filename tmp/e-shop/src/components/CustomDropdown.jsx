@@ -17,7 +17,7 @@ class CustomDropdown extends Component {
               type="button"
               aria-haspopup="listbox"
               aria-expanded={this.props.isOptionsOpen}
-              onClick={this.props.toggleOptions}
+              onClick={this.props.toggleCurrencyDropdownOption}
               value={this.optionsList[this.props.currencyBase]}
               onChange={(e)=> this.setState({currencyBase : e.target.value})}
             >

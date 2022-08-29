@@ -11,19 +11,17 @@
 
 .centered {
   position: absolute;
-  top: 35%;
+  top: 0;
   right: 0;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 15%);
   z-index: 10;
 }
 
 .modal {
   width: 350px;
-  height: auto;
+  max-height: 500px;
+  overflow-y: scroll;
   background: white;
-  color: white;
-  z-index: 10;
-  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
 }
   
 .heading {
@@ -42,6 +40,15 @@
   font-size: 14px;
   color: #2c3e50;
   gap: 10px;
+}
+
+.selectedSize {
+  background-color: black !important;
+  color: white;
+}
+
+.selectedColor{
+  border: 2px solid green !important;
 }
 
 .row1{

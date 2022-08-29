@@ -60,27 +60,23 @@ class DetailPage extends Component {
               <p>SIZE:</p>
               <div className={styles.size_btns}>
               {data.product.attributes.map((attr) => attr.type === "text" && attr.items.map((i) => 
-                <button type="button" value={i.value}>{i.value}</button>))
-              }
+                <button type="button" value={i.value}>{i.value}</button>))}
               </div>
               <p>COLOR:</p>
               <div className={styles.color_btns}>
               {data.product.attributes.map((attr) => attr.type === "swatch" && attr.items.map(i => (
-                <button type="button" value={i.value} style={{ backgroundColor: `${i.value}`, border:"none"}}></button>)))
-              }
+                <button type="button" value={i.value} style={{ backgroundColor: `${i.value}`, border:"none"}}></button>)))}
               </div>
               <p>PRICE:</p>
               {data.product.prices.filter((item) => item.currency.symbol === this.props.symbol)
-                .map((price, index) => (<p key={index}>{this.props.symbol} {price.amount}</p>))
-              }
+                .map((price, index) => (<p key={index}>{this.props.symbol} {price.amount}</p>))}
               <button type="button" className={styles.add_card_btn} onClick={() => this.props.addToCartWithQty(data.product)}>
                 ADD TO CARD
               </button>
               <div className={styles.details} dangerouslySetInnerHTML={{ __html: data.product.description }}/>
             </section>
           </main>
-          )
-        }}
+        )}}
       </Query>
     );
   }

@@ -61,7 +61,7 @@ class TechComp extends Component {
   render() {
     return (
       <>
-        <h1 className={styles.title}>Category {this.state.title.charAt(0).toUpperCase() + this.state.title.slice(1)}</h1>
+        <h1 className={styles.title}>{this.state.title.charAt(0).toUpperCase() + this.state.title.slice(1)}</h1>
         <section className={styles.card_section}>
           {this.state.tech.products?.map((product) => (
             <main className={styles.card_main} key={product.id}>
@@ -70,7 +70,7 @@ class TechComp extends Component {
                 <label>
                   <p>{product.name}</p>
                   {product.prices.filter((item) => item.currency.symbol === this.props.symbol).map((price, index) => (
-                    <p key={index}>{this.props.symbol} {price.amount}</p>
+                    <p key={index}>{this.props.symbol} {this.props.formatPrice({value: price.amount, digitCount: 2})}</p>
                   ))}
                 </label>
               </Link>

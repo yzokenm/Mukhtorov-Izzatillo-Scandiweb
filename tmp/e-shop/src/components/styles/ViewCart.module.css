@@ -1,6 +1,6 @@
 .main{
     margin: 0;
-    padding: 50px;
+    padding: 70px;
 }
 
 .section{
@@ -36,6 +36,13 @@
     margin-right: 10px;
 }
 
+.selectedSize{
+    background-color: black !important;
+    color: white;
+}
+.selectedColor{
+    border: 2px solid green !important;
+}
 
 .right{
     display: flex;

@@ -17,23 +17,22 @@ class App extends Component {
       currencyBase: "$",
       isOptionsOpen: false,
       isModalOpen: false,
-      isAttributSelected: true
+      isAttributSelected: true,
+      isSelected:false
     }
   }
 
   // FUNCTION TAKES PRODUCT AND ADDS TO CART MODAL 
-
   addToCartWithQty =(productToAdd)=> {
     let isInCart = false;
     let newCart = [...this.state.cart]
-   
     for(let i = 0; i < newCart.length; i++){
       if(newCart[i].id === productToAdd.id){
         newCart[i].qty++
         isInCart = true
       }      
     }
-
+    
     if(isInCart === false){
       newCart.push({
         id:productToAdd.id,
@@ -52,53 +51,7 @@ class App extends Component {
     })
   }
 
-  // FUNCTION TO UPDATE SELECTED SIZE OF THE ATTRIBUTES OF PRODUCT IN THE CART
-
-  handleSelectedSizeOfProduct =(e, id)=> {
-    let newCart = [...this.state.cart]
-    if(e.target.value){
-      for(let i = 0; i < newCart.length; i++){
-        if(newCart[i].id === id){
-          this.setState({isAttributSelected: !this.state.isAttributSelected})
-          if(this.state.isAttributSelected){
-            newCart[i].size = e.target.value
-            e.target.style.backgroundColor = "black"
-            e.target.style.color = 'white' 
-          }else{
-            e.target.style.backgroundColor = "white"
-            e.target.style.color = 'black' 
-            newCart[i].size = null
-          }
-        }
-        this.setState({
-          cart:newCart
-        })
-      }
-    }
-
-  }
-  // FUNCTION TO UPDATE SELECTED COLOR OF THE ATTRIBUTES OF PRODUCT IN THE CART
-
-  handleSelectedColorOfProduct =(e, id)=> {
-    let newCart = [...this.state.cart]
-    for(let i = 0; i < newCart.length; i++){
-      if(newCart[i].id === id){
-        this.setState({isAttributSelected: !this.state.isAttributSelected})
-        if(this.state.isAttributSelected){
-          newCart[i].color = e.target.value
-          e.target.style.border = '1px solid #5DCF7B'
-        }else{
-          newCart[i].color = null
-          e.target.style.border = "none"
-        }
-
-      }
-
-      }
-  }
-
   // FUNCTION REMOVES PRODUCT FROM CART
-  
   removeFromCart = (productIndex) => {
     let removefromCart = [...this.state.cart]
     if(removefromCart[productIndex].qty > 1){
@@ -111,10 +64,37 @@ class App extends Component {
     })
   }
 
+  // FUNCTION TO UPDATE SELECTED SIZE OF THE ATTRIBUTES OF PRODUCT IN THE CART
+  handleSelectedSizeOfProduct = (value, id) => {
+    let newCart = [...this.state.cart]
+    let index = newCart.findIndex(e => e.id === id)
+    if (newCart[index].size !== value || newCart[index].size === null ) {
+      newCart[index].size = value
+    }else{
+      newCart[index].size = null
+    }
+    this.setState({
+      cart: newCart
+    })
+}
+
+  // FUNCTION TO UPDATE SELECTED COLOR OF THE ATTRIBUTES OF PRODUCT IN THE CART
+  handleSelectedColorOfProduct =(value, id)=> {
+    let newCart = [...this.state.cart]
+    let index = newCart.findIndex(e => e.id === id)
+    if (newCart[index].color !== value || newCart[index].color === null ) {
+      newCart[index].color = value
+    }else{
+      newCart[index].color = null
+    }
+    this.setState({
+      cart: newCart
+    })
+  }
+
   // Currency dropdown to change the currency of the store 
   // to one of the available currencies
-
-  toggleOptions = () => {
+  toggleCurrencyDropdownOption = () => {
     this.setState({
       isOptionsOpen:true
     })
@@ -129,9 +109,8 @@ class App extends Component {
   
   //  FUNCTION TAKES OBJECT AS AN ARGUMENT WHICH CONTAINS VALUE AND 
   //  DIGIT NUMBER. VALUE WILL BE SEPERATED AFTER THOUSANDS AND DIGITCOUNT 
-  //  IS NUMBER OF DECIMALS AFTER FRACTIONS 
-
-  formatNumber=(params)=> {
+  //  IS A NUMBER OF DECIMALS AFTER INTEGER  
+  formatPrice=(params)=> {
     if (!params.value) {
       return (0).toFixed(params.digitCount ?? 2).toString();
     }
@@ -147,7 +126,7 @@ class App extends Component {
           <MyNavbar 
             currencyBase={this.state.currencyBase}
             isOptionsOpen={this.state.isOptionsOpen}
-            toggleOptions={this.toggleOptions}
+            toggleCurrencyDropdownOption={this.toggleCurrencyDropdownOption}
             setSelectedThenCloseDropdown={this.setSelectedThenCloseDropdown}
             cart={this.state.cart}
             onClick={() => this.setState({ isModalOpen: true })}
@@ -165,24 +144,28 @@ class App extends Component {
               addToCartWithQty={this.addToCartWithQty} 
               removeFromCart={this.removeFromCart} 
               symbol={symbol}
-              formatNumber={this.formatNumber}
+              formatPrice={this.formatPrice}
             />} 
             />
             <Route path="/clothes" element={<ClothesComp
               symbol={symbol}
               addToCartWithQty={this.addToCartWithQty}
-            />}/>
+              formatPrice={this.formatPrice}
+              />}
+            />
             <Route path="/tech" element={<TechComp
               symbol={symbol}
               addToCartWithQty={this.addToCartWithQty}
-            />}/>
+              formatPrice={this.formatPrice}
+              />}
+            />
             <Route path="/ViewCart" element={<ViewCart cart={this.state.cart} 
               removeFromCart={this.removeFromCart} 
               addToCartWithQty={this.addToCartWithQty} 
               symbol={symbol}
               handleSelectedSizeOfProduct={this.handleSelectedSizeOfProduct}
               handleSelectedColorOfProduct={this.handleSelectedColorOfProduct}
-              formatNumber={this.formatNumber}
+              formatPrice={this.formatPrice}
               />}
             />
           </Routes>
@@ -195,7 +178,7 @@ class App extends Component {
               qty={this.state.qty}
               symbol={symbol}
               handleSelectedSizeOfProduct={this.handleSelectedSizeOfProduct}
-              formatNumber={this.formatNumber}
+              formatPrice={this.formatPrice}
             />
           )}
       </Router>

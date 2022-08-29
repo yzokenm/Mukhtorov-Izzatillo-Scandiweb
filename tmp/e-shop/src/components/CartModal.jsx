@@ -4,17 +4,14 @@ import modalStyles from "./styles/Modal.module.css";
 
 class CartModal extends Component {
   render() {
+    // CALCULATES SUM OF ITEMS IN MINI CART
     let newCart = [...this.props.cart]
-    let totalQty = 0;
     let totalSum = 0;
-    let arr = []
-    for(let i = 0; i < newCart.length; i++){
-      totalQty += newCart[i].qty
-    }
-    this.props.cart.map(item=> (item.prices.filter((price) => price.currency.symbol === this.props.symbol)
-      .map(price => arr.push(price.amount))
-    ))
-    totalSum = arr.reduce((acc, val)=> (acc + val)*totalQty, 0)
+    let newArr = [];
+    newCart.map(item => 
+      item.prices.filter(price => price.currency.symbol === this.props.symbol)
+      .map(price => newArr.push(item.qty*price.amount))) 
+    totalSum = newArr.reduce((acc, val)=> acc + val, 0)
     return (
       <>
         <div onClick={this.props.onClick}  className={modalStyles.darkBg}/>
@@ -35,13 +32,25 @@ class CartModal extends Component {
                     <p>Size:</p>
                     <div className={modalStyles.size_btns}>
                       {item.attributes.map((attr) => attr.type === "text" && attr.items.map((i) => 
-                        <button type="button" value={i.value} onClick={(e)=> {this.props.handleSelectedSizeOfProduct(e, item.id)}}>{i.value}</button>))
+                        <button 
+                          type="button" 
+                          value={i.value} 
+                          className={item.size === i.value ? modalStyles.selectedSize : ''}
+                          >
+                          {i.value}
+                        </button>))
                       }
                     </div>
                     <p>Color:</p>
                     <div className={modalStyles.color_btns}>
                     {item.attributes.map((attr) => attr.type === "swatch" && attr.items.map(i => (
-                      <button type="button" value={i.value} style={{ backgroundColor: `${i.value}`, border:"none"}}></button>
+                      <button 
+                        type="button" 
+                        value={i.value} 
+                        className={item.color === i.value ? "selectedColor" : ''}
+                        style={{ backgroundColor: `${i.value}`, border:"none"}}
+                        >
+                      </button>
                     )))}
                     </div>
                   </div>
@@ -56,7 +65,7 @@ class CartModal extends Component {
             ))}
             <div className={modalStyles.totalCheckout}>
               <p>Total:</p>
-              <p>{this.props.symbol} {this.props.formatNumber({value:totalSum, digitCount:2})}</p>
+              <p>{this.props.symbol} {this.props.formatPrice({value:totalSum, digitCount:2})}</p>
             </div>
             <div className={modalStyles.actionsContainer}>
               <Link to={"/ViewCart"}><button className={modalStyles.viewBtn}>VIEW BAG</button></Link>

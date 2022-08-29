@@ -18,7 +18,7 @@ class MyNavbar extends Component {
                     <CustomDropdown 
                         currencyBase={this.props.currencyBase}
                         isOptionsOpen={this.props.isOptionsOpen}
-                        toggleOptions={this.props.toggleOptions}
+                        toggleCurrencyDropdownOption={this.props.toggleCurrencyDropdownOption}
                         setSelectedThenCloseDropdown={this.props.setSelectedThenCloseDropdown}
                         handleKeyDown={this.props.handleKeyDown}
                     />
