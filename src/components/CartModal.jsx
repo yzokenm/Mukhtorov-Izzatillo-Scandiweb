@@ -47,7 +47,7 @@ class CartModal extends Component {
                       <button 
                         type="button" 
                         value={i.value} 
-                        className={item.color === i.value ? "selectedColor" : ''}
+                        className={item.color === i.value ? modalStyles.selectedColor : ''}
                         style={{ backgroundColor: `${i.value}`, border:"none"}}
                         >
                       </button>
