@@ -1,3 +1,5 @@
+/* NAVBAR STYLE HERE */
+
 .main_navbar{
     padding: 50px;
     z-index: 11;
@@ -9,12 +11,6 @@
 .main_navbar div:nth-child(3){
     display: flex;
     gap: 10px;
-}
-  
-.select_currency select{
-    font-size: 20px;
-    border: 0px;
-    outline: 0px;
 }
   
 /* CURRENCY SELECT DROPDOWN */
@@ -33,8 +29,6 @@
     font-size: 30px;
 
 }
-
-
 
 /* MENU TAB UNDERLINE ANIMATION */
 .wrapper{
@@ -102,16 +96,16 @@
   /* CARD STYLES */
 
 .card_section{
-    padding-left: 70px;
+    padding: 80px;
     padding-top: 140px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    row-gap: 50px;
+    row-gap: 30px;
 }
 
 .title{
-    padding-left: 60px;
+    margin-left: 70px;
 }
 
 .card_main{
